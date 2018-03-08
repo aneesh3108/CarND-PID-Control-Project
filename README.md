@@ -1,6 +1,25 @@
 # CarND-Controls-PID
 Self-Driving Car Engineer Nanodegree Program
 
+## Rubric Reflections 
+
+* Student describes the effect of the P, I, D component of the PID algorithm in their implementation. Is it what you expected?
+* Student discusses how they chose the final hyperparameters (P, I, D coefficients). This could be have been done through manual tuning, twiddle, SGD, or something else, or a combination!
+
+In this project, we implemented the PID Control for Self Driving Cars. The aim of this project was to use the Cross Track Error (CTE) provided by Udacity's simulator and adjust the PID controller to drive the care SAFELY through the terrain at a speeds of 30 MPH +-.
+
+PID = Proportional Integral Derivative controller. It is a control loop feedback mechanism and in our case, operates on minimizing the Cross Track error for a self driving car. This is done by applying a correction adjustment based on proportional, integral, and derivative terms, which lend the controller its name. 
+
+* "Proportional" or "P" for short, is the component that has the direct effect on the car's behavior. It causes the car to steer proportionally to the CTE, that is the car's center distance from the lane center. If the car is widely far to the left, it will adjust for the steering angle correction to go right. If its the opposite, the steering angle update will make it go left and try and keep the car as close to the center as possible. 
+
+Ideally, this would be the only required parameter. Howevver, only using P leads to a lot of oscillations, swerving the car left and right - without leading to a stable drive. Large values of P will definitely cause the car to keep swerving.
+
+* For this reason, we have an additional component "Differential (D)" which is the rate of change of the CTE. Because of this, as the CTE reduces, the steering won’t keep oscillating and hence, the car smoothly convergees to the target trajectory and drives itself in a stable manner. Large values of D can sometimes help in converging the car trajectory at sharp turns, while small values of D are not so useful towards the entire goal. 
+
+* Lastly, there is the "Integral (I)" component which considers all past values of the CTE and sums them over to the current timestep. This helps in effectively reducing the systematic bias caused due to either steering drift caused during wheel tunings or residual error after applying the P - D controls. From the observations in the video, having a value of I = 0 caused the car to take very sharp turns at curves, while the turn curvatures reduced with I ~= 0.5. A comparitively large value of I (> 0.015) caused the car to start swverving again, and I believe that it kind-off negates the adjustment made by "D", and hence the effective output is just the value of "P". 
+
+The final parameters were chosen manually, since implementing twiddle caused confusion for me, especially while deciding how many timesteps to evaluate and where to start from. I started off with the values in mind from the course lessons [0.2, 0.004, 3.0] and ended up at [0.15, 0.0005, 3.1]. Firstly, the D & I values were set to 0 to observe the car's functioning. Clearly, it was an oscillating mess. I later assigned an value to D and tuned P - D in sync to have the car drive itself smoothly. At this point, the car was working out ok, except at some curves and certain spots. The value for I was then assigned and tuned on its own to have the car be effectively driven. One of the spots still has an issue - however, I believe (to the best of my knowlegde), the CTE becomes comparitively high there for some reason and hence, the car swerves. 
+
 ---
 
 ## Dependencies
