@@ -18,7 +18,18 @@ Ideally, this would be the only required parameter. Howevver, only using P leads
 
 * Lastly, there is the "Integral (I)" component which considers all past values of the CTE and sums them over to the current timestep. This helps in effectively reducing the systematic bias caused due to either steering drift caused during wheel tunings or residual error after applying the P - D controls. From the observations in the video, having a value of I = 0 caused the car to take very sharp turns at curves, while the turn curvatures reduced with I ~= 0.5. A comparitively large value of I (> 0.015) caused the car to start swverving again, and I believe that it kind-off negates the adjustment made by "D", and hence the effective output is just the value of "P". 
 
-The final parameters were chosen manually, since implementing twiddle caused confusion for me, especially while deciding how many timesteps to evaluate and where to start from. I started off with the values in mind from the course lessons [0.2, 0.004, 3.0] and ended up at [0.15, 0.0005, 3.1]. Firstly, the D & I values were set to 0 to observe the car's functioning. Clearly, it was an oscillating mess. I later assigned an value to D and tuned P - D in sync to have the car drive itself smoothly. At this point, the car was working out ok, except at some curves and certain spots. The value for I was then assigned and tuned on its own to have the car be effectively driven. One of the spots still has an issue - however, I believe (to the best of my knowlegde), the CTE becomes comparitively high there for some reason and hence, the car swerves. 
+The below figure shows the effect of using "P", "P-D" and "P-I-D" based controllers. Reference: Udacity lessons on PID.
+
+<img src="./pid_udacity.png" alt="Figure 1" width = "400">
+
+The final parameters were chosen manually, since implementing twiddle caused confusion for me, especially while deciding how many timesteps to evaluate and where to start from. I started off with the values in mind from the course lessons [0.2, 0.004, 3.0] and ended up at [0.15, 0.0005, 3.1]. Firstly, the D & I values were set to 0 to observe the car's functioning. Clearly, it was an oscillating mess. I later assigned an value to D and tuned P - D in sync to have the car drive itself smoothly. At this point, the car was working out ok, except at some curves and certain spots (below two figures). The value for I was then assigned and tuned on its own to have the car be effectively driven. One of the spots still has an issue - however, I believe (to the best of my knowlegde), the CTE becomes comparitively high there for some reason and hence, the car swerves. 
+
+<img src="./spot_pid.png" alt="Figure 2" width = "700">
+
+This figure shows a particular spot on the track where the car just takes a swerve without any reason - it is observed that the CTE randomly jumps to a higher value, hence causing the sharp turn. 
+
+<img src="./curve_pid.png" alt="Figure 3" width = "400">
+This figure shows the effect of "I" on the overall controller. Without "I", the curve turn here would have been a very sharp and oscillating one, however, with the use of "I", it transitions significantly smoothly. Then again, PID controllers alone are a bit overrated since they manage to take turns to minimize the CTE, but forget to include the physics of a car's functioning - for e.g. the sharp turns at curves would have probably caused the car to drift in real life, however, here it smoothly stays on the road. 
 
 ---
 
