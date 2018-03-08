@@ -62,10 +62,11 @@ int main()
           * another PID controller to control the speed!
           */
 	  
-	  steer_value = 0.0;
+	  //steer_value = 0.0;
 	  pid.UpdateError(cte);
-	  steer_value += pid.TotalError();           
-
+	  //steer_value += pid.TotalError();           
+	  steer_value = pid.TotalError(); //to maintain transparency and reduce dependency operations 
+					  //changed post initial project code review
 
           // DEBUG
           std::cout << "CTE: " << cte << " Steering Value: " << steer_value << std::endl;
