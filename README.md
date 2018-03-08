@@ -31,6 +31,8 @@ This figure shows a particular spot on the track where the car just takes a swer
 <img src="./curve_pid.png" alt="Figure 3" width = "400">
 This figure shows the effect of "I" on the overall controller. Without "I", the curve turn here would have been a very sharp and oscillating one, however, with the use of "I", it transitions significantly smoothly. Then again, PID controllers alone are a bit overrated since they manage to take turns to minimize the CTE, but forget to include the physics of a car's functioning - for e.g. the sharp turns at curves would have probably caused the car to drift in real life, however, here it smoothly stays on the road. 
 
+A youtube video showing the fully working simulation can be found here: https://youtu.be/zE59IrxSb-0
+
 ---
 
 ## Dependencies
