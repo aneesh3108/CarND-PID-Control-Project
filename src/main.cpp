@@ -51,7 +51,10 @@ int main()
           double cte = std::stod(j[1]["cte"].get<std::string>());
           //double speed = std::stod(j[1]["speed"].get<std::string>());
           //double angle = std::stod(j[1]["steering_angle"].get<std::string>());
-          double steer_value;
+          //commented since the variables are not used for steering angle calculation
+	  //and raise a warning during cmake
+
+	  double steer_value;
           /*
           * TODO: Calcuate steering value here, remember the steering value is
           * [-1, 1].
